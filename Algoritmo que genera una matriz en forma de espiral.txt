@@ -1,0 +1,85 @@
+#include <stdio.h> 
+#include <stdlib.h> 
+#include <time.h> 
+	
+int main()
+{
+	int Nf, lc, I, i, j, a, c, r, t, c2, suma=0, suma2=0, sumatotal; 
+	
+	do{  
+	printf("\nIngrese el tamanio que tendra la matriz: ");  scanf("%d", &Nf); 
+	
+	//inicializacion de matriz NxN  	
+	int matriz[Nf][Nf]; 
+	//se copia la variable Nf para evitar que se corrompa 
+	lc=Nf; 
+	
+	a=1;  	i=0;  	j=0;  	I=0;  	c=Nf*Nf;  	c2=Nf*Nf*Nf; 
+	
+	if(Nf % 2 != 0 && Nf >= 3){ 
+		
+		//Implementacion de numero random 
+		srand(time(NULL)); 
+		t=rand() % (c2-c+1)+c; 
+		printf("\n\nNumero aleatorio: %d\n\n", t);
+		//copiar el numero random para imprimir al final 
+		int replica = t;  	 	//inicializacion 
+		
+		while(a<=c){ 
+			//Fila 1 
+			for (j = lc; j > I; j--) 
+			{ 
+				matriz[i][j-1] = t--; 
+			}   
+			//Columna 1 
+			for(i = I+1; i < lc; i++) 
+			{ 
+				matriz[i][j] = t--; 
+			} 
+			//Fila 2 
+			for (j = I+1; j < lc; j++) 
+			{ 
+				matriz[i-1][j] = t--; 
+			} 
+			//Columna 2 
+			for (i = lc-1; i > I+1; i--) 
+			{ 
+				matriz[i-1][j-1] = t--; 
+			}       I++;      lc--;   	a++; 
+		} 
+		//impresion y suma en x (equis) de la matriz 
+		for(i = 0; i < Nf; i++) 
+		{ 
+			for (j = 0; j < Nf; j++) 
+			{ 
+				printf("[%4d]", matriz[i][j]); 
+				
+				if(i == j){ 
+					suma += matriz[i][j]; 
+				} 
+				
+				else if(i + j == Nf - 1){ 
+					suma2 += matriz[i][j]; 
+				} 
+				
+				else{ 
+					matriz[i][j]=0; 
+				} 
+			} 
+			printf("\n\n");  	 
+		} 
+		sumatotal = suma+suma2; 
+		printf("En una espiral de %dx%d e iniciando en %d la suma de las diagonales es de %d.\n\n", Nf, Nf, replica, sumatotal); 
+		suma=0;
+		suma2=0;
+	}else{ //restriccion
+		printf("\nNumero no valido\n\n"); 
+	} 
+	
+	printf("Desea intentar con otro tamanio?  \n1. Si  \n2. No  \nQue eliges?: "); 
+	scanf("%d", &r); 
+		   
+	}while(Nf % 2 == 0 || Nf < 3 || r == 1);  
+	
+	return 0; 
+} 		
